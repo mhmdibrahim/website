@@ -24,12 +24,13 @@ Route::get('/home','AdminController@home')->middleware('auth');
 Route::get('/sliders','SliderController@show')->name('slider.show')->middleware('auth');
 Route::post('/slider/add','SliderController@add')->name('slider.add')->middleware('auth');
 Route::get('/slider/edit/{id}','SliderController@edit')->name('slider.edit')->middleware('auth');
-Route::post('/slider/update','SliderController@update')->name('slider.update')->middleware('auth');
+Route::post('/slider/{id}/update','SliderController@update')->name('slider.update')->middleware('auth');
 Route::get('/slider/delete/{id}','SliderController@delete')->name('slider.delete')->middleware('auth');
 
-Route::get('/about','AboutController@show')->name('about.show')->middleware('auth');
-Route::post('/about/add','AboutController@add')->name('about.add')->middleware('auth');
-Route::get('/about/delete/{id}','AboutController@delete')->name('about.delete')->middleware('auth');
+Route::get('/about','AboutController@show')->name('about.show');
+Route::post('/about/add','AboutController@add')->name('about.add');
+Route::post('/about/{id}/update','AboutController@update')->name('about.update');
+Route::get('/about/delete/{id}','AboutController@delete')->name('about.delete');
 
 Route::get('/portfolio','PortofolioController@show')->name('portofolio.show')->middleware('auth');
 Route::post('/portofolio/add','PortofolioController@add')->name('portofolio.add')->middleware('auth');
@@ -41,10 +42,10 @@ Route::get('/teams','TeamController@show')->name('team.show')->middleware('auth'
 Route::post('/team/add','TeamController@add')->name('Team.add')->middleware('auth');
 Route::get('/team/delete/{id}','TeamController@delete')->name('Team.delete')->middleware('auth');
 
-Route::get('/blogs','BlogController@show')->name('blogs.show')->middleware('auth');
-Route::post('/blog/add','BlogController@add')->name('blog.add')->middleware('auth');
-Route::post('/blog/update/{id}','BlogController@update')->name('blog.update')->middleware('auth');
-Route::get('/blog/delete/{id}','BlogController@delete')->name('blog.delete')->middleware('auth');
+Route::get('/blogs','BlogController@show')->name('blogs.show');
+Route::post('/blog/add','BlogController@add')->name('blog.add');
+Route::post('/blog/{id}/update','BlogController@update')->name('blog.update');
+Route::post('/blog/{id}/delete','BlogController@delete')->name('blog.delete');
 
 Route::get('/clients','ClientController@show')->name('clients.show')->middleware('auth');
 Route::post('/client/add','ClientController@add')->name('client.add')->middleware('auth');

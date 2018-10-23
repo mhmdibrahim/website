@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>--}}
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	<title>Document</title>
@@ -21,6 +21,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="form col-lg-10 col-md-offset-2 marg">
+                <form method="post" action="/blog/add" enctype="multipart/form-data">
+                    @csrf
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add To Blog</button>
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -35,19 +37,24 @@
 			        <form>
 			          <div class="form-group">
 			            <label for="select" class="form-control-label">select img</label>
-			            <input type="file" class="form-control  btn-warning" id="select">
+			            <input type="file" name="img" class="form-control  btn-warning" id="select">
 			          </div>
 			          <div class="form-group">
-			            <label for="heading-text" class="form-control-label">heading</label>
-					    <input type="text" class="form-control" placeholder="heading" id="heading-text" aria-describedby="basic-addon1">
+			            <label for="heading-text" class="form-control-label">title</label>
+					    <input type="text" name="title" class="form-control" placeholder="heading" id="heading-text" aria-describedby="basic-addon1">
 			          </div>
 			          <div class="form-group">
-			            <label for="content-text" class="form-control-label">content</label>
-					    <input type="text" class="form-control" placeholder="content" id="content-text" aria-describedby="basic-addon1">
+			            <label for="content-text" class="form-control-label">description</label>
+					    <input type="text" name="desc" class="form-control" placeholder="content" id="content-text" aria-describedby="basic-addon1">
 			          </div>
 			          <div class="form-group">
-			            <label for="content-text" class="form-control-label">date</label>
-					    <input type="text" class="form-control" placeholder="date" id="content-text" aria-describedby="basic-addon1">
+                          <select name="member">
+                              @forelse($teams as $team)
+                              <option value="{{$team->id}}">{{$team->name}}</option>
+                                  @empty
+                                  No team founded
+                              @endforelse
+                          </select>
 			          </div>
 			        </form>
 			      </div>
@@ -58,13 +65,17 @@
 			    </div>
 			  </div>
 			</div>
+                </form>
 		</div>
 
 		<!-- model Edit  -->
+            @foreach($blogs as $blog)
 		<div class="form col-lg-10 col-md-offset-2 ">
-			<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
+			<div class="modal fade" id="Edit_{{$blog->id}}" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
+                    <form method="post" action="/blog/{{$blog->id}}/update" enctype="multipart/form-data">
+                        @csrf
 			      <div class="modal-header">
 			        <h5 class="modal-title" id="EditLabel">Edit Blog</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,29 +83,38 @@
 			        </button>
 			      </div>
 			        <div class="modal-body">
-			        <form>
 			          <div class="form-group">
 			            <label for="select" class="form-control-label">select img</label>
-			            <input type="file" class="form-control  btn-warning" id="select">
+			            <input type="file" class="form-control  btn-warning" name="edit_img" id="select">
 			          </div>
 			          <div class="form-group">
-			            <label for="heading-text" class="form-control-label">heading</label>
-					    <input type="text" class="form-control" placeholder="heading" id="heading-text" aria-describedby="basic-addon1">
+			            <label for="heading-text" class="form-control-label">Title</label>
+					    <input type="text" class="form-control" placeholder="heading" id="heading-text" name="edit_title" value="{{$blog->title}}" aria-describedby="basic-addon1">
 			          </div>
 			          <div class="form-group">
-			            <label for="content-text" class="form-control-label">content</label>
-					    <input type="text" class="form-control" placeholder="content" id="content-text" aria-describedby="basic-addon1">
+			            <label for="content-text" class="form-control-label">Description</label>
+					    <input type="text" class="form-control" placeholder="content" id="content-text" name="edit_desc" value="{{$blog->description}}" aria-describedby="basic-addon1">
 			          </div>
-			        </form>
+                        <div class="form-group">
+                            <select name="member">
+                                @forelse($teams as $team)
+                                    <option value="{{$team->id}}">{{$team->name}}</option>
+                                @empty
+                                    No team founded
+                                @endforelse
+                            </select>
+                        </div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			        <button type="submit" class="btn btn-primary"> Edit Blog </button>
 			      </div>
-			    </div>
+                    </form>
+                </div>
 			  </div>
 			</div>
 		</div>
+            @endforeach
 		<!-- end modal edit -->
 
 			<div class="col-lg-10 col-md-offset-2">
@@ -103,21 +123,29 @@
 				    <tr>
 				      <th>ID</th>
 				      <th>heading</th>
-				      <th>date</th>
-				      <th>content</th>
+				      <th>description</th>
+                        <th>member</th>
+                        <th>image</th>
 				      <th> Edit</th>
 				      <th>Delete</th>
 				    </tr>
 				  </thead>
 				  <tbody>
+                  @forelse($blogs as $blog)
 				    <tr>
-				      <th scope="row">1</th>
-				      <td> Mark</td>
-				      <td>Mark</td>
-				      <td>Mark</td>
-					   <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-				  <td><button id="delete" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
-				    </tr>
+				      <th scope="row">{{$loop->iteration}}</th>
+				      <td>{{$blog->title}}</td>
+				      <td>{{$blog->description}}</td>
+				      <td>{{$blog->team->name}}</td>
+                        <td><img style="width: 150px; height: 80px" src="images/blog/{{$blog->img}}"></td>
+                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit_{{$blog->id}}" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+				        <td><form class="d-inline" action="/blog/{{$blog->id}}/delete" method="post" >@csrf<button id="delete" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></form></td>
+                    </tr>
+                    @empty
+                      <tr>
+                      <td>No Blogs Founded!!</td>
+                      </tr>
+                    @endforelse
 				</table>
 			</div>
 		</div>

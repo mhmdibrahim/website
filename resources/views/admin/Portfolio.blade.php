@@ -24,11 +24,12 @@
 </head>
 <body>
 @include('admin.header')
+
 <!-- start table slider -->
 <div class="container">
     <div class="row">
         <div class="form col-lg-10 col-md-offset-2 marg ">
-            <form method="post" action="/portofolio/add">
+            <form method="post" action="/portofolio/add" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@mdo">Add To project
@@ -86,7 +87,7 @@
             <div class="modal fade" id="Edit-{{$project->id}}" tabindex="-1" role="dialog" aria-labelledby="project" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form action="/portofolio/update/{{$project->id}}" method="post">
+                        <form action="/portofolio/update/{{$project->id}}" method="post" enctype="multipart/form-data">
                             {{csrf_field()}}
                         <div class="modal-header">
                             <h5 class="modal-title" id="project">Edit project</h5>
