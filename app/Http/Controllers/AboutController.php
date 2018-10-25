@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class AboutController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function show(){
+        $skills = DB::table('skills')->get();
         $about_us = DB::table('with_us')->get();
-        return view('admin.about')->with('about_us',$about_us);
+        return view('admin.about')->with('about_us',$about_us)
+                                        ->with('skills',$skills);
     }
     public function add(Request $request){
 //        dd($request->all());
@@ -52,4 +59,6 @@ class AboutController extends Controller
         WithUs::destroy($id);
         return redirect()->route('about.show');
     }
+
+
 }

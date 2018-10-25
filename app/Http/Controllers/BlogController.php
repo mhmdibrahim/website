@@ -22,7 +22,6 @@ class BlogController extends Controller
 
     public function add(Request $request)
     {
-//        dd($request->all());
         $request->validate([
             'title'=>'string|required',
             'desc'=>'string|required',
@@ -62,6 +61,5 @@ class BlogController extends Controller
         $img->move('images/blog',$blog->img);
         $blog->save();
         return redirect()->route('blogs.show');
-
     }
 }

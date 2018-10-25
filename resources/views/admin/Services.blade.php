@@ -21,6 +21,8 @@
 	<div class="container">
 		<div class="row">
 				<div class="form col-lg-10 col-md-offset-2 marg ">
+                    <form method="post" action="/service/add" enctype="multipart/form-data" >
+                        @csrf
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add To Services</button>
 				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
@@ -32,20 +34,14 @@
 				        </button>
 				      </div>
 				      <div class="modal-body">
-				        <form>
 				          <div class="form-group">
-				            <label for="select" class="form-control-label">select icon</label>
-				            <input type="file" class="form-control  btn-danger" id="select">
+				            <label for="heading-text" class="form-control-label">Title</label>
+						    <input type="text" class="form-control" name="title" placeholder="heading" id="heading-text" aria-describedby="basic-addon1">
 				          </div>
 				          <div class="form-group">
-				            <label for="heading-text" class="form-control-label">heading</label>
-						    <input type="text" class="form-control" placeholder="heading" id="heading-text" aria-describedby="basic-addon1">
+				            <label for="content-text" class="form-control-label">Description</label>
+						    <input type="text" class="form-control" name="desc" placeholder="content" id="content-text" aria-describedby="basic-addon1">
 				          </div>
-				          <div class="form-group">
-				            <label for="content-text" class="form-control-label">content</label>
-						    <input type="text" class="form-control" placeholder="content" id="content-text" aria-describedby="basic-addon1">
-				          </div>
-				        </form>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -54,41 +50,43 @@
 				    </div>
 				  </div>
 				</div>
+                    </form>
 			</div>
 
 			<!-- model Edit  -->
-			<div class="form col-lg-10 col-md-offset-2 ">
-				<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="EditLabel">Edit Services</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body">
-				        <form action="php_site/generl_input.php" method="POST" enctype="multipart/form-data">
-				          <div class="form-group">
-				            <label for="select" class="form-control-label">select icon</label>
-				            <input type="file" class="form-control  btn-info" id="select"  name="img_slider">
-				          </div>
-				          <div class="form-group">
-						    <input type="text" class="form-control" placeholder="heading"  name="heading_slider" aria-describedby="basic-addon1">
-				          </div>
-				          <div class="form-group">
-						    <input type="text" class="form-control" placeholder="content"  name="pragraph_slider" aria-describedby="basic-addon1">
-				          </div>
-				        </form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary"> Edit Services </button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
+            @foreach($services as $service)
+            <div class="form col-lg-10 col-md-offset-2 ">
+                <form method="post" action="/service/{{$service->id}}/update" >
+                    @csrf
+                    <div class="modal fade" id="Edit_{{$service->id}}" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="EditLabel">Edit Services</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="form-group">
+                                  <label for="heading-text" class="form-control-label">Title</label>
+                                  <input type="text" class="form-control" placeholder="heading" value="{{$service->title}}" name="edit_title" aria-describedby="basic-addon1">
+                              </div>
+                              <div class="form-group">
+                                  <label for="content-text" class="form-control-label">Description</label>
+                                  <input type="text" class="form-control" placeholder="content" value="{{$service->description}}"  name="edit_desc" aria-describedby="basic-addon1">
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"> Edit Services </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </form>
 			</div>
+            @endforeach
 			<!-- end modal edit -->
 
 			<div class="col-lg-10 col-md-offset-2">
@@ -96,22 +94,27 @@
 				  <thead>
 				    <tr>
 				      <th>ID</th>
-				      <th>heading</th>
+				      <th>title</th>
+				      <th>description</th>
 				      <th>icon</th>
-				      <th>content</th>
 				      <th> Edit</th>
 				      <th>Delete</th>
 				    </tr>
 				  </thead>
 				  <tbody>
+                  @foreach($services as $service)
 				    <tr>
-				      <th scope="row">1</th>
-				      <td> Mark</td>
-				      <td>Mark</td>
-				      <td>Mark</td>
-					  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-				 	 <td><button id="delete_servise" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
-				    </tr>
+				      <th scope="row">{{$loop->iteration}}</th>
+				      <td>{{$service->title}}</td>
+				      <td>{{$service->description}}</td>
+				      <td>{{$service->icon}}</td>
+					  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit_{{$service->id}}" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                      <form method="post" action="/service/{{$service->id}}/delete">
+                          @csrf
+                          <td><button id="delete_servise" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+                      </form>
+                    </tr>
+                    @endforeach
 				</table>
 			</div>
 		</div>

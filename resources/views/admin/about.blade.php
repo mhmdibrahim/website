@@ -11,7 +11,7 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>--}}
-	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	<title>Document</title>
     <style>
@@ -145,76 +145,72 @@
 	<div class="container">
 		<div class="row">
 		<div class="form col-lg-10 col-md-offset-2 ">
-			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#skils" data-whatever="@mdo">Add To Sklis</button>
-			<div class="modal fade" id="skils" tabindex="-1" role="dialog" aria-labelledby="Edieskiles" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="Edieskiles">New Sklis</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <form>
-			          <div class="form-group">
-			            <label for="select" class="form-control-label">select img:</label>
-			            <input type="file" class="form-control  btn-warning " id="select">
-			          </div>
-			          <div class="form-group">
-			            <label for="heading-text" class="form-control-label">title:</label>
-					    <input type="text" class="form-control" placeholder="title" id="heading-text" aria-describedby="basic-addon1">
-			          </div>
-			          <div class="form-group">
-			            <label for="pragraph-text" class="form-control-label">rate:</label>
-					    <input type="text" class="form-control" placeholder="rate" id="pragraph-text" aria-describedby="basic-addon1">
-			          </div>
-			        </form>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="submit" class="btn btn-primary">Add Sklis </button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
+            <form method="post" action="{{route('skill.add')}}">
+                @csrf
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#skils" data-whatever="@mdo">Add To Sklis</button>
+                <div class="modal fade" id="skils" tabindex="-1" role="dialog" aria-labelledby="Edieskiles" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="Edieskiles">New Sklis</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group">
+                            <label for="heading-text" class="form-control-label">Name:</label>
+                            <input type="text" class="form-control"  name="name" placeholder="title" id="heading-text" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="form-group">
+                            <label for="pragraph-text" class="form-control-label">Rate:</label>
+                            <input type="text" class="form-control" name="rate" placeholder="rate" id="pragraph-text" aria-describedby="basic-addon1">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Sklis </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </form>
 		</div>
 
 		<!-- model Edit skils -->
-		<div class="form col-lg-10 col-md-offset-2 ">
-			<div class="modal fade" id="editSkils" tabindex="-1"  role="dialog" aria-labelledby="#skils" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="skils">Edit skiles</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <form>
-			          <div class="form-group">
-			            <label for="select" class="form-control-label">select img</label>
-			            <input type="file" class="form-control  btn-warning" id="select">
-			          </div>
-			          <div class="form-group">
-			            <label for="title-text" class="form-control-label">title</label>
-					    <input type="text" class="form-control" placeholder="title" id="title-text" aria-describedby="basic-addon1">
-			          </div>
-			          <div class="form-group">
-			            <label for="text-text" class="form-control-label">text</label>
-					    <input type="text" class="form-control" placeholder="text" id="text-text" aria-describedby="basic-addon1">
-			          </div>
-			        </form>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="submit" class="btn btn-primary"> Edit skiles </button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-		</div>
+            @foreach($skills as $skill)
+                <div class="form col-lg-10 col-md-offset-2 ">
+                    <form method="post" action="{{route('skill.update',$skill->id)}}">
+                        @csrf
+                        <div class="modal fade" id="editSkils_{{$skill->id}}" tabindex="-1"  role="dialog" aria-labelledby="#skils" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="skils">Edit skiles</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="form-group">
+                                    <label for="title-text" class="form-control-label">Name</label>
+                                    <input type="text" class="form-control" name="edit_name" value="{{$skill->name}}" placeholder="title" id="title-text" aria-describedby="basic-addon1">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="text-text" class="form-control-label">Rate</label>
+                                    <input type="text" class="form-control" name="edit_rate" value="{{$skill->skill_value}}" placeholder="text" id="text-text" aria-describedby="basic-addon1">
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary"> Edit skiles </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            @endforeach
 		<!-- end  edit modal -->
 
 		<!--  show table skils -->
@@ -230,12 +226,18 @@
 				    </tr>
 				  </thead>
 				  <tbody>
+                  @foreach($skills as $skill)
 				    <tr>
-				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td>Mark</td>
-					   <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#editSkils" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-				  <td><button id="delete_skils" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+				      <th scope="row">{{$loop->iteration}}</th>
+				      <td>{{$skill->name}}</td>
+				      <td>{{$skill->skill_value}}</td>
+					   <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#editSkils_{{$skill->id}}" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+				        <form method="post" action="{{route('skill.delete',$skill->id)}}">
+                            @csrf
+                            <td><button id="delete_skils" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+                        </form>
+                    </tr>
+                    @endforeach
 				</table>
 			</div>
 		</div>

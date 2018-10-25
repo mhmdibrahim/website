@@ -12,4 +12,5 @@ class Social_Media extends Model
     public function teams(){
         return $this->belongsToMany(Team::class,'team_social','team_id','social_id');
     }
+
 }

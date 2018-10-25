@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>--}}
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	<title>Document</title>
@@ -21,6 +21,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="form col-lg-10 col-md-offset-2 marg">
+                <form method="post" action="/client/add" enctype="multipart/form-data">
+                    @csrf
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add To Clints</button>
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -33,21 +35,22 @@
 			      </div>
 			      <div class="modal-body">
 			        <form>
-			          <div class="form-group">
-			            <label for="select" class="form-control-label">select img</label>
-			            <input type="file" class="form-control  btn-warning" id="select">
-			          </div>
+                        <div class="form-group">
+                            <label for="select" class="form-control-label">select img</label>
+                            <input type="file" class="form-control   btn-warning" name="img" id="select">
+                        </div>
+                        <div class="form-group">
+                            <label for="content-text" class="form-control-label">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="feedback" id="content-text" aria-describedby="basic-addon1">
+                        </div>
 			          <div class="form-group">
 			            <label for="heading-text" class="form-control-label">desc</label>
-					    <input type="text" class="form-control" placeholder="desc" id="heading-text" aria-describedby="basic-addon1">
+					    <input type="text" class="form-control" name="desc" placeholder="desc" id="heading-text" aria-describedby="basic-addon1">
 			          </div>
-			          <div class="form-group">
-			            <label for="content-text" class="form-control-label">feedback</label>
-					    <input type="text" class="form-control" placeholder="feedback" id="content-text" aria-describedby="basic-addon1">
-			          </div>
+
 			          <div class="form-group">
 			            <label for="content-text" class="form-control-label">url</label>
-					    <input type="text" class="form-control" placeholder="url" id="content-text" aria-describedby="basic-addon1">
+					    <input type="text" class="form-control" name="link" placeholder="url" id="content-text" aria-describedby="basic-addon1">
 			          </div>
 			        </form>
 			      </div>
@@ -58,11 +61,15 @@
 			    </div>
 			  </div>
 			</div>
+                </form>
 		</div>
 
 	<!-- model Edit  -->
+           @foreach($clients as $client)
 		<div class="form col-lg-10 col-md-offset-2 ">
-			<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
+            <form method="post" action="/client/{{$client->id}}/update" enctype="multipart/form-data">
+                @csrf
+			<div class="modal fade" id="Edit_{{$client->id}}" tabindex="-1" role="dialog" aria-labelledby="EditLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -75,19 +82,19 @@
 			        <form>
 			          <div class="form-group">
 			            <label for="select" class="form-control-label">select img</label>
-			            <input type="file" class="form-control  btn-warning" id="select">
+			            <input type="file" name="edit_img" class="form-control  btn-warning" id="select">
 			          </div>
+                        <div class="form-group">
+                            <label for="content-text" class="form-control-label">Name</label>
+                            <input type="text" value="{{$client->name}}" name="edit_name" class="form-control" placeholder="feedback" id="content-text" aria-describedby="basic-addon1">
+                        </div>
 			          <div class="form-group">
-			            <label for="heading-text" class="form-control-label">desc</label>
-					    <input type="text" class="form-control" placeholder="desc" id="heading-text" aria-describedby="basic-addon1">
-			          </div>
-			          <div class="form-group">
-			            <label for="content-text" class="form-control-label">feedback</label>
-					    <input type="text" class="form-control" placeholder="feedback" id="content-text" aria-describedby="basic-addon1">
+			            <label for="heading-text" class="form-control-label">Desc</label>
+					    <input type="text" name="edit_desc" value="{{$client->description}}" class="form-control" placeholder="desc" id="heading-text" aria-describedby="basic-addon1">
 			          </div>
 			          <div class="form-group">
 			            <label for="content-text" class="form-control-label">url</label>
-					    <input type="text" class="form-control" placeholder="url" id="content-text" aria-describedby="basic-addon1">
+					    <input type="text" name="edit_link" value="{{$client->link}}" class="form-control" placeholder="url" id="content-text" aria-describedby="basic-addon1">
 			          </div>
 			        </form>
 			      </div>
@@ -98,7 +105,9 @@
 			    </div>
 			  </div>
 			</div>
+            </form>
 		</div>
+            @endforeach
 		<!-- end modal edit -->
 
 			<div class="col-lg-10 col-md-offset-2">
@@ -106,8 +115,8 @@
 				  <thead>
 				    <tr>
 				      <th>ID</th>
-				      <th>desc</th>
-				      <th>feedback</th>
+				      <th>name</th>
+				      <th>description</th>
 				      <th>url</th>
 				      <th>img</th>
 				      <th> Edit</th>
@@ -115,16 +124,25 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <th scope="row">1</th>
-				      <td> Mark</td>
-				      <td>Mark</td>
-				      <td>Mark</td>
-				      <td>Mark</td>
-					  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-					  <td><button id="delete" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
-				    </tr>
-				</table>
+                  @forelse($clients as $client)
+                      <tr>
+                          <th scope="row">{{$loop->iteration}}</th>
+                          <td>{{$client->name}}</td>
+                          <td>{{$client->description}}</td>
+                          <td>{{$client->link}}</td>
+                          <td><img style="width: 100px;height: 80px" src="images/clients/{{$client->img}}"></td>
+                          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Edit_{{$client->id}}" data-whatever="@mdo"  class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                          <form class="d-inline" method="post" action="/client/{{$client->id}}/delete">
+                              @csrf
+                              <td><button id="delete" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+                          </form>
+                      </tr>
+                  @empty
+                      <tr>
+                        <td>No clients Founded</td>
+                      </tr>
+                    @endforelse
+                </table>
 			</div>
 		</div>
 	</div>
