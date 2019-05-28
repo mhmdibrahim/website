@@ -40,7 +40,7 @@ class TeamController extends Controller
         $team = new Team();
         $team->name = $request->name;
         $team->position = $request->position;
-        $team->description=$request->desc;
+        $team->description= $request->desc;
         $img = $request->img ;
         $team->img = date('d-m-Y-h-i-s'). "." .$img->extension();
         $img->move('images/our-team',$team->img);
@@ -83,6 +83,7 @@ class TeamController extends Controller
         $team_social->save();
         return redirect()->route('team.details',$id);
     }
+
     public function updateLink(Request $request,$id)
     {
         $request->validate([
