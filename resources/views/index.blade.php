@@ -88,7 +88,7 @@
             fd.append('email',email);
             fd.append('name',name);
             fd.append('message',message);
-            alert(message);
+            alert(fd);
             $.ajax({
                 url: "/",
                 type:'POST',
