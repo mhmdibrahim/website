@@ -133,7 +133,7 @@
 
  var sure =document.getElementById('delete');
  sure.onclick = function () {
-  	test = confirm('are you suer delete');
+  	test = confirm('are you sure delete');
  	if (test === true) {
  		alert('deleted succssfuly');
  	}

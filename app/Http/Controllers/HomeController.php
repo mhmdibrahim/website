@@ -48,6 +48,7 @@ class HomeController extends Controller
          $contact_us->msg = $request->message ;
          $contact_us->arrival_time = now();
          $contact_us->save();
-        return redirect()->route('show');
+        return response()->json(['success'=>'Your Message Sent Successfully']);
+//        return redirect()->route('show');
     }
 }

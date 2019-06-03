@@ -25,8 +25,8 @@
                 <div class="col-sm-6">
                     <div id="contact-form-section">
                         <div class="status alert alert-success" style="display: none"></div>
-                        <form id="contact-form" class="contact" name="contact-form" method="post" action="/">
-                            {{csrf_field()}}
+                        <form id="contact-form" class="contact" name="contact-form" method="post">
+                            @csrf
                             <div class="form-group">
                                 <input  id="name" type="text" name="name" class="form-control name-field" required="required" placeholder="Your Name"></div>
                             <div class="form-group">
@@ -45,3 +45,47 @@
         </div>
     </div>
 </section>
+
+
+{{--<script type="text/javascript">--}}
+
+    {{--// $(document).on("click","#send_message",function () {--}}
+    {{--// var email=$('#email').val();--}}
+    {{--// var name=$('#name').val();--}}
+    {{--// // alert(password);--}}
+
+    {{--// var data = {email:email,name:name};--}}
+    {{--//        $.post("message.php",data,function(data){--}}
+    {{--// 			if(data=="true")--}}
+    {{--// 			{--}}
+    {{--// 			//window.location.href="";--}}
+    {{--// 			alert("t");--}}
+    {{--//             }--}}
+    {{--//              else{--}}
+    {{--//                          	// $('.y').attr('style','display: block');--}}
+    {{--//                          	// $('.x').attr('style','display: none');--}}
+    {{--//                           	alert("f");--}}
+    {{--//                          }--}}
+    {{--// 		 	 // $('#result').html(data);--}}
+    {{--// 		      // alert(data);--}}
+    {{--// 		 	});--}}
+
+
+    {{--//  });--}}
+
+
+    {{--// $(document).ready(function() {--}}
+    {{--//             $("#contact-form").submit(function(e) {--}}
+    {{--//                 $.ajax({--}}
+    {{--//                     type : "POST",--}}
+    {{--//                     url : "message.php",--}}
+    {{--//                     data : $("#contact-form").serialize(),--}}
+    {{--//                     success : function(response) {--}}
+    {{--//                         alert(response);--}}
+    {{--//                     }--}}
+    {{--//                 });--}}
+    {{--//                 e.preventDefault();--}}
+    {{--//             });--}}
+
+    {{--//         });--}}
+{{--</script>--}}

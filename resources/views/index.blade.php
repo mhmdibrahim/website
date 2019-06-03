@@ -76,8 +76,41 @@
 	<script type="text/javascript" src="/js/jquery.prettyPhoto.js"></script>
 	<script type="text/javascript" src="/js/jquery.parallax.js"></script>
 	<script type="text/javascript" src="/js/main.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).on("click","#send_message",function () {
+            var email=$('#email').val();
+            var name=$('#name').val();
+            var message =$('#message').val();
+            var fd = new FormData();
+            fd.append('_token',$("input[name='_token']").val());
+            fd.append('email',email);
+            fd.append('name',name);
+            fd.append('message',message);
+            alert(message);
+            $.ajax({
+                url: "/",
+                type:'POST',
+                contentType: false,
+                processData: false,
+                data: fd,
+                success: function(data) {
+                    if(data.success){
+                        swal("Done", data.success, "success");
+                        $('#name').val('');
+                        $('#email').val('');
+                        $('#message').val('');
+                    }
+                },
+            });
+
+        });
+
+    </script>
+    <script type="text/javascript">
+
+
 
 //		  $(document).on("click","#send_message", function (e) {
 //		    var name =$('#name').val();
@@ -104,47 +137,7 @@
 
 //});
 	</script>
-<script type="text/javascript">
-// $(document).on("click","#send_message",function () {
-// var email=$('#email').val();
-// var name=$('#name').val();
-// // alert(password);
 
-// var data = {email:email,name:name};
-//        $.post("message.php",data,function(data){
-// 			if(data=="true")
-// 			{
-// 			//window.location.href="";
-// 			alert("t");
-//             }
-//              else{
-//                          	// $('.y').attr('style','display: block');
-//                          	// $('.x').attr('style','display: none');
-//                           	alert("f");
-//                          }
-// 		 	 // $('#result').html(data);
-// 		      // alert(data);
-// 		 	});
-
-
-//  });
-
-
-// $(document).ready(function() {
-//             $("#contact-form").submit(function(e) {
-//                 $.ajax({
-//                     type : "POST",
-//                     url : "message.php",
-//                     data : $("#contact-form").serialize(),
-//                     success : function(response) {
-//                         alert(response);
-//                     }
-//                 });
-//                 e.preventDefault();
-//             });
-
-//         });
-</script>
 
 </body>
 </html>
